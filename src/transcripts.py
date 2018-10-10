@@ -48,11 +48,10 @@ class Transcript:
             speakers = [speakers]
         
         # check if the requested speakers are present in the transcript
-        if type(speakers) == list:
-            for speaker in speakers:
-                if speaker not in self.speakers():
-                    print(f'WARNING: The speaker {speaker} is not present ' +
-                          f'in the transcript {self.name}.')             
+        for speaker in speakers:
+            if speaker not in self.speakers():
+                print(f'WARNING: The speaker {speaker} is not present ' +
+                      f'in the transcript {self.name}.')             
             
         # get tokens from the specified speakers
         tokens = [word.lower()
@@ -158,14 +157,14 @@ def age_in_months(age):
     return float(f'{total:.2f}')
 
 def plot_prop_word_freqs(words, transcripts, speaker='CHI'):
-    '''Show a plot of proportional frequencies for each given word with age in
-    months on the x-axis. The maximum number of words is seven.'''
+    '''Show a plot of proportional frequencies for each given word with the age
+    of the child in months on the x-axis. The max number of words is seven.'''
     
     if type(words) == str:
         words = [words]
     
     # get ages from all transcripts and convert these to months
-    ages = [trn.speaker_details()[speaker]['age'] for trn in transcripts]
+    ages = [trn.speaker_details()['CHI']['age'] for trn in transcripts]
     ages = [age_in_months(age) for age in ages]
     
     # list of colors
@@ -179,7 +178,7 @@ def plot_prop_word_freqs(words, transcripts, speaker='CHI'):
                        for trn in transcripts]        
         plt.plot(ages, word_freqs, colors[i], label=word)
     
-    # make labels and legend and show the plot
+    # make t pretty and show the plot
     plt.xlabel('Age in months')
     plt.ylabel('Proportional word frequency')
     plt.legend()
