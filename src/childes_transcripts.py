@@ -2,6 +2,8 @@ import os
 from collections import Counter
 from string import punctuation as pnc
 import matplotlib.pyplot as plt
+import glob
+from nltk.corpus import stopwords
 
 class Transcript:
     '''This class is a representation of a transcript following the norm from
@@ -71,6 +73,16 @@ class Transcript:
         
         return set(self.tokens(speakers=speakers))
     
+    def ttr(self, speakers='all', disregard=[]):
+        '''Return the type-to-token-ratio of the transcript in whole. Pass
+        specific speaker(s) to get it for only that/these speaker(s).'''
+        
+        tokens = [word for word in self.tokens(speakers=speakers)
+                  if word not in disregard]
+        types = set(tokens)
+        
+        return len(types) / len(tokens)
+    
     def word_freqs(self, speakers='all'):
         '''Return a Counter object of tokens uttered by the specified
         speaker(s). If no speakers are specified, return a Counter object for
@@ -116,6 +128,19 @@ class Transcript:
         ids = {entry['name']:entry
                for entry in ids if entry['name'] in self.speakers()}
         
+        '''
+        # correct the name codes with the longer names from the partipants line
+        for line in self.headers:
+            if line.startswith('@Participants'):
+                try:
+                    names = [speaker.split()[1]
+                             for speaker in line[14:].split(',')]
+                    for i, entry in enumerate(ids.values()):
+                        entry['name'] = names[i]
+                except:
+                    continue
+        '''
+                
         return ids
     
 def load_all_from_dir(dirname):
@@ -126,11 +151,13 @@ def load_all_from_dir(dirname):
     os.chdir(dirname)
     
     # load all transcripts from the folder and clean out non-loaded ones
-    trans = [Transcript(file) for file in os.listdir()]
+    trans = [Transcript(file) for file in glob.glob('*.cha')]
     trans = [trn for trn in trans if trn.fully_loaded]
     
     # sort the list
     trans.sort(key=lambda x: x.name)
+    
+    os.chdir('..')
     
     return trans
 
@@ -156,9 +183,19 @@ def age_in_months(age):
     
     return float(f'{total:.2f}')
 
-def plot_prop_word_freqs(words, transcripts, speaker='CHI'):
+def word_freqs_all(transcripts, speakers='all'):
+    '''Return one Counter object of all transcripts passed'''
+    
+    counters = [trn.word_freqs(speakers=speakers) for trn in transcripts]
+    counter_all = Counter()
+    for counter in counters:
+        counter_all.update(counter)
+        
+    return counter_all
+
+def plot_word_freqs(words, transcripts, speaker='CHI'):
     '''Show a plot of proportional frequencies for each given word with the age
-    of the child in months on the x-axis. The max number of words is seven.'''
+    of the child in months on the x-axis.'''
     
     if type(words) == str:
         words = [words]
@@ -167,22 +204,72 @@ def plot_prop_word_freqs(words, transcripts, speaker='CHI'):
     ages = [trn.speaker_details()['CHI']['age'] for trn in transcripts]
     ages = [age_in_months(age) for age in ages]
     
-    # list of colors
-    colors = ['r', 'b', 'y', 'g', 'c', 'm', 'k']
-    
     # for each word, get and plot the prop freq with a color and a label
-    for i, word in enumerate(words):
+    for word in words:
         word_freqs = [trn.prop_word_freqs(speakers=speaker)[word]
-                       if word in trn.tokens(speakers=speaker)
-                       else 0
-                       for trn in transcripts]        
-        plt.plot(ages, word_freqs, colors[i], label=word)
+                      if word in trn.tokens(speakers=speaker)
+                      else 0
+                      for trn in transcripts]        
+        plt.plot(ages, word_freqs, '^', label=word)
     
-    # make t pretty and show the plot
+    # make it pretty and show the plot
+    plt.title('Word frequencies over time')
     plt.xlabel('Age in months')
     plt.ylabel('Proportional word frequency')
     plt.legend()
     plt.show()
     
     return
+
+def plot_wordgroup_freq(wordgroup, transcripts, speaker='CHI', 
+                        label='wordgroup'):
     
+    # get ages from all transcripts and convert these to months
+    ages = [trn.speaker_details()['CHI']['age'] for trn in transcripts]
+    ages = [age_in_months(age) for age in ages]
+    
+    # for each word, get and plot the prop freq with a color and a label
+    
+    word_freqs = [sum([trn.prop_word_freqs(speakers=speaker)[word]
+                       if word in trn.tokens(speakers=speaker) else 0
+                       for word in wordgroup])
+                  for trn in transcripts]
+
+    
+    plt.plot(ages, word_freqs, '^')
+    
+    # make it pretty and show the plot
+    plt.title(f'Word frequencies over time for {label}')
+    plt.xlabel('Age in months')
+    plt.ylabel('Proportional word frequency')
+    plt.show()
+    
+    return
+
+def plot_ttr(transcripts, child='CHI', speakers=['CHI', 'MOT'], disregard=[]):
+    '''Show a plot of the type-to-token-ratio over time with the age of the
+    child in months on the x-axis. As a default, the comparison is made with
+    the target child and the mother. In case the child has another name code
+    than 'CHI', this should be corrected in order to retrieve the age in eac
+    transcript.'''
+    
+    # get ages from all transcripts and convert these to months
+    ages = [trn.speaker_details()[child]['age'] for trn in transcripts]
+    ages = [age_in_months(age) for age in ages]
+    
+    # get type-to-token-ratios from all trancripts
+    for speaker in speakers:
+        ttr = [trn.ttr(speakers=speaker, disregard=disregard)
+               if speaker in trn.speakers()
+               else None
+               for trn in transcripts]
+        plt.plot(ages, ttr, '^', label=speaker)
+    
+    # make it pretty and show the plot
+    plt.title('Type-to-token-ratio over time')
+    plt.xlabel('Age in months')
+    plt.ylabel('TTR')
+    plt.legend()
+    plt.show()
+    
+    return
