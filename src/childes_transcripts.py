@@ -184,7 +184,8 @@ def age_in_months(age):
     return float(f'{total:.2f}')
 
 def word_freqs_all(transcripts, speakers='all'):
-    '''Return one Counter object of all transcripts passed'''
+    '''Return one Counter object of all transcripts passed counting only
+    utterances from the specified speaker(s).'''
     
     counters = [trn.word_freqs(speakers=speakers) for trn in transcripts]
     counter_all = Counter()
@@ -250,7 +251,7 @@ def plot_ttr(transcripts, child='CHI', speakers=['CHI', 'MOT'], disregard=[]):
     '''Show a plot of the type-to-token-ratio over time with the age of the
     child in months on the x-axis. As a default, the comparison is made with
     the target child and the mother. In case the child has another name code
-    than 'CHI', this should be corrected in order to retrieve the age in eac
+    than 'CHI', this should be corrected in order to retrieve the age in each
     transcript.'''
     
     # get ages from all transcripts and convert these to months
