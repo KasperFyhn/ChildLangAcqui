@@ -3,7 +3,6 @@ from collections import Counter
 from string import punctuation as pnc
 import matplotlib.pyplot as plt
 import glob
-from nltk.corpus import stopwords
 
 class Transcript:
     '''This class is a representation of a transcript following the norm from
@@ -75,7 +74,9 @@ class Transcript:
     
     def ttr(self, speakers='all', disregard=[]):
         '''Return the type-to-token-ratio of the transcript in whole. Pass
-        specific speaker(s) to get it for only that/these speaker(s).'''
+        specific speaker(s) to get it for only that/these speaker(s). A list of
+        words to be disregarded in the calculation, e.g. function words, can be
+        passed if needed.'''
         
         tokens = [word for word in self.tokens(speakers=speakers)
                   if word not in disregard]
@@ -127,19 +128,6 @@ class Transcript:
         # create a dict with names as keys and the dicts as values
         ids = {entry['name']:entry
                for entry in ids if entry['name'] in self.speakers()}
-        
-        '''
-        # correct the name codes with the longer names from the partipants line
-        for line in self.headers:
-            if line.startswith('@Participants'):
-                try:
-                    names = [speaker.split()[1]
-                             for speaker in line[14:].split(',')]
-                    for i, entry in enumerate(ids.values()):
-                        entry['name'] = names[i]
-                except:
-                    continue
-        '''
                 
         return ids
     
@@ -148,16 +136,17 @@ def load_all_from_dir(dirname):
     sorted after file names. The directory name should be stated either as
     relative path from the working directory or as an absolute path.'''
     
+    prev_dir = os.getcwd()
     os.chdir(dirname)
     
     # load all transcripts from the folder and clean out non-loaded ones
     trans = [Transcript(file) for file in glob.glob('*.cha')]
     trans = [trn for trn in trans if trn.fully_loaded]
     
-    # sort the list
+    # make sure the list is sorted
     trans.sort(key=lambda x: x.name)
     
-    os.chdir('..')
+    os.chdir(prev_dir)
     
     return trans
 
@@ -224,22 +213,25 @@ def plot_word_freqs(words, transcripts, speaker='CHI'):
 
 def plot_wordgroup_freq(wordgroup, transcripts, speaker='CHI', 
                         label='wordgroup'):
+    '''Show a plot of the summed proportional frequencies of a given wordgroup
+    with the age of the child in months on the x-axis.'''
+    
     
     # get ages from all transcripts and convert these to months
     ages = [trn.speaker_details()['CHI']['age'] for trn in transcripts]
     ages = [age_in_months(age) for age in ages]
     
-    # for each word, get and plot the prop freq with a color and a label
+    # make a list of the sums of word frequencies of words in the group
+    word_freqs = []
+    for trn in transcripts:
+        prop_freqs = trn.prop_word_freqs(speakers=speaker)
+        tokens = trn.tokens(speakers=speaker)
+        wordgroup_freqs = [prop_freqs[word] if word in tokens else 0
+                           for word in wordgroup]
+        word_freqs.append(sum(wordgroup_freqs))
     
-    word_freqs = [sum([trn.prop_word_freqs(speakers=speaker)[word]
-                       if word in trn.tokens(speakers=speaker) else 0
-                       for word in wordgroup])
-                  for trn in transcripts]
-
-    
+    # make and show the plot
     plt.plot(ages, word_freqs, '^')
-    
-    # make it pretty and show the plot
     plt.title(f'Word frequencies over time for {label}')
     plt.xlabel('Age in months')
     plt.ylabel('Proportional word frequency')
@@ -261,8 +253,7 @@ def plot_ttr(transcripts, child='CHI', speakers=['CHI', 'MOT'], disregard=[]):
     # get type-to-token-ratios from all trancripts
     for speaker in speakers:
         ttr = [trn.ttr(speakers=speaker, disregard=disregard)
-               if speaker in trn.speakers()
-               else None
+               if speaker in trn.speakers() else None
                for trn in transcripts]
         plt.plot(ages, ttr, '^', label=speaker)
     
