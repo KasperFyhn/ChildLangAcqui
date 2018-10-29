@@ -184,14 +184,15 @@ def word_freqs_all(transcripts, speakers='all'):
     return counter_all
 
 def basic_stats(transcript: Transcript, speakers='CHI'):
-    '''Return a tuple containing age in months, number of tokens and number
-    of types.'''
+    '''Return a tuple containing age in months, number of tokens, number of
+    types and TTR.'''
     
     age = age_in_months(transcript.speaker_details()['CHI']['age'])
     tokens = len(transcript.tokens(speakers='CHI'))
     types = len(transcript.types(speakers='CHI'))
+    ttr = transcript.ttr(speakers=speakers)
     
-    return(age, tokens, types)
+    return(age, tokens, types, ttr)
 
 def plot_word_freqs(words, transcripts, speaker='CHI'):
     '''Show a plot of proportional frequencies for each given word with the age
@@ -207,8 +208,7 @@ def plot_word_freqs(words, transcripts, speaker='CHI'):
     # for each word, get and plot the prop freq with a color and a label
     for word in words:
         word_freqs = [trn.prop_word_freqs(speakers=speaker)[word]
-                      if word in trn.tokens(speakers=speaker)
-                      else 0
+                      if word in trn.tokens(speakers=speaker) else None
                       for trn in transcripts]        
         plt.plot(ages, word_freqs, '^', label=word)
     
@@ -238,7 +238,11 @@ def plot_wordgroup_freq(wordgroup, transcripts, speaker='CHI',
         tokens = trn.tokens(speakers=speaker)
         wordgroup_freqs = [prop_freqs[word] if word in tokens else 0
                            for word in wordgroup]
-        word_freqs.append(sum(wordgroup_freqs))
+        sum_freqs = sum(wordgroup_freqs)
+        if sum_freqs == 0:
+            word_freqs.append(None)
+        else:
+            word_freqs.append(sum_freqs)
     
     # make and show the plot
     plt.plot(ages, word_freqs, '^')

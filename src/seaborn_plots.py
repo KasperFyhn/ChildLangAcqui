@@ -12,7 +12,7 @@ def plot_word_freq(word: str, transcripts, speaker='CHI'):
     
     # get the proportinal
     freqs = [trn.prop_word_freqs(speakers=speaker)[word]
-             if word in trn.tokens(speakers=speaker) else 0
+             if word in trn.tokens(speakers=speaker) else None
              for trn in transcripts]
     
     data = pd.DataFrame({'age': ages, 'word frequency': freqs})
@@ -36,10 +36,14 @@ def plot_wordgroup_freq(wordgroup, transcripts, speaker='CHI'):
         tokens = trn.tokens(speakers=speaker)
         wordgroup_freqs = [prop_freqs[word] if word in tokens else 0
                            for word in wordgroup]
-        freqs.append(sum(wordgroup_freqs))
+        sum_freqs = sum(wordgroup_freqs)
+        if sum_freqs == 0:
+            freqs.append(None)
+        else:
+            freqs.append(sum_freqs)
     
-    data = pd.DataFrame({'age': ages, 'Word group frequency': freqs})
+    data = pd.DataFrame({'age': ages, 'word group frequency': freqs})
 
-    sns.lmplot(x='age', y='Word group frequency', data=data)  
+    sns.lmplot(x='age', y='word group frequency', data=data)  
     
     return
