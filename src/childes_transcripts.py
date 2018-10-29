@@ -183,6 +183,16 @@ def word_freqs_all(transcripts, speakers='all'):
         
     return counter_all
 
+def basic_stats(transcript: Transcript, speakers='CHI'):
+    '''Return a tuple containing age in months, number of tokens and number
+    of types.'''
+    
+    age = age_in_months(transcript.speaker_details()['CHI']['age'])
+    tokens = len(transcript.tokens(speakers='CHI'))
+    types = len(transcript.types(speakers='CHI'))
+    
+    return(age, tokens, types)
+
 def plot_word_freqs(words, transcripts, speaker='CHI'):
     '''Show a plot of proportional frequencies for each given word with the age
     of the child in months on the x-axis.'''
@@ -265,3 +275,4 @@ def plot_ttr(transcripts, child='CHI', speakers=['CHI', 'MOT'], disregard=[]):
     plt.show()
     
     return
+
