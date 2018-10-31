@@ -105,9 +105,9 @@ class Transcript:
         return prop_freqs
     
     def speakers(self):
-        '''Return a set of all speakers that appear in the transcript'''
+        '''Return a list of all speakers that appear in the transcript'''
 
-        return {line[1:4] for line in self.lines}
+        return list({line[1:4] for line in self.lines})
     
     def speaker_details(self):
         '''Return a dictionary of dictionaries containing details about the
@@ -130,6 +130,14 @@ class Transcript:
                for entry in ids if entry['name'] in self.speakers()}
                 
         return ids
+    
+    def children(self):
+        '''Return a list of the target child(ren) in the transcript.'''
+        
+        children = [entry['name'] for entry in self.speaker_details().values()
+                    if entry['role'] == 'Target_Child']
+        
+        return children
     
 def load_all_from_dir(dirname):
     '''Return a list of Transcript objects loaded from the given directory
@@ -226,7 +234,6 @@ def plot_wordgroup_freq(wordgroup, transcripts, speaker='CHI',
     '''Show a plot of the summed proportional frequencies of a given wordgroup
     with the age of the child in months on the x-axis.'''
     
-    
     # get ages from all transcripts and convert these to months
     ages = [trn.speaker_details()['CHI']['age'] for trn in transcripts]
     ages = [age_in_months(age) for age in ages]
@@ -253,7 +260,8 @@ def plot_wordgroup_freq(wordgroup, transcripts, speaker='CHI',
     
     return
 
-def plot_ttr(transcripts, child='CHI', speakers=['CHI', 'MOT'], disregard=[]):
+def plot_ttr_over_time(transcripts, child='CHI', speakers=['CHI', 'MOT'],
+                       disregard=[]):
     '''Show a plot of the type-to-token-ratio over time with the age of the
     child in months on the x-axis. As a default, the comparison is made with
     the target child and the mother. In case the child has another name code

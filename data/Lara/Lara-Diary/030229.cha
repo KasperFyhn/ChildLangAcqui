@@ -1,0 +1,25 @@
+@UTF8
+@PID:	11312/c-00018170-1
+@Begin
+@Languages:	eng
+@Participants:	CHI Lara Target_Child
+@ID:	eng|Lara|CHI|3;02.29|female|||Target_Child|||
+@Date:	14-AUG-1997
+*CHI:	where (i)s Brumm ?
+%mor:	adv:int|where cop|be&3S n:prop|Brumm ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	why has Dipsy got that in his head ?
+%mor:	adv:int|why aux|have&3S n:prop|Dipsy v|get&PAST pro:dem|that
+	prep|in det:poss|his n|head ?
+%gra:	1|4|SUBJ 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|OBJ 6|4|JCT 7|8|MOD 8|6|POBJ
+	9|4|PUNCT
+*CHI:	why (i)s he going home ?
+%mor:	adv:int|why cop|be&3S pro:sub|he part|go-PRESP n|home ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|3|XMOD 5|4|JCT 6|2|PUNCT
+*CHI:	why was daddy_long_legs in here ?
+%mor:	adv:int|why cop|be&PAST&13S n|daddy_long_legs prep|in adv|here ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|3|NJCT 5|4|POBJ 6|2|PUNCT
+*CHI:	where (i)s my keys ?
+%mor:	adv:int|where aux|be&3S det:poss|my n|key-PL ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|MOD 4|2|PRED 5|2|PUNCT
+@End

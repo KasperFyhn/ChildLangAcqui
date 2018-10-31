@@ -1,0 +1,64 @@
+@UTF8
+@PID:	11312/c-00018107-1
+@Begin
+@Languages:	eng
+@Participants:	CHI Lara Target_Child
+@ID:	eng|Lara|CHI|3;00.20|female|||Target_Child|||
+@Date:	05-JUN-1997
+*CHI:	what (do)es this do ?
+%mor:	pro:int|what mod|do&3S pro:dem|this v|do ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	what (do)es this teddy do ?
+%mor:	pro:int|what mod|do&3S pro:dem|this n|teddy v|do ?
+%gra:	1|5|LINK 2|5|AUX 3|4|DET 4|5|SUBJ 5|0|ROOT 6|5|PUNCT
+*CHI:	what else is there ?
+%mor:	pro:int|what post|else aux|be&3S adv|there ?
+%gra:	1|0|INCROOT 2|1|PQ 3|1|ENUM 4|3|JCT 5|1|PUNCT
+*CHI:	why 0is she not here, mummy ?
+%mor:	adv:int|why 0aux|is pro:sub|she neg|not adv|here cm|cm n|mummy ?
+%gra:	1|2|LINK 2|0|ROOT 3|5|SUBJ 4|3|NEG 5|2|JCT 6|5|LP 7|5|ENUM 8|2|PUNCT
+*CHI:	where (ha)s it gone ?
+%mor:	adv:int|where aux|have&3S pro:per|it part|go&PASTP ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	where (i)s my mat ?
+%mor:	adv:int|where aux|be&3S det:poss|my n|mat ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|MOD 4|2|PRED 5|2|PUNCT
+*CHI:	why do you bang it ?
+%mor:	adv:int|why mod|do pro:per|you v|bang pro:per|it ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|OBJ 6|4|PUNCT
+*CHI:	which one do you want ?
+%mor:	pro:rel|which pro:indef|one mod|do pro:per|you v|want ?
+%gra:	1|2|LINK 2|5|SUBJ 3|5|AUX 4|5|SUBJ 5|0|ROOT 6|5|PUNCT
+*CHI:	where is grandad going ?
+%mor:	adv:int|where aux|be&3S grand#n|ad part|go-PRESP ?
+%gra:	1|4|LINK 2|4|AUX 3|4|AUX 4|0|ROOT 5|4|PUNCT
+*CHI:	where (i)s she ?
+%mor:	adv:int|where cop|be&3S pro:sub|she ?
+%gra:	1|2|SUBJ 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	what (i)s that funny noise ?
+%mor:	pro:int|what cop|be&3S pro:dem|that adj|fun&dn-Y n|noise ?
+%gra:	1|2|LINK 2|0|ROOT 3|5|DET 4|5|MOD 5|2|PRED 6|2|PUNCT
+*CHI:	why has daddy gone to Sarah's house ?
+%mor:	adv:int|why aux|have&3S n|daddy part|go&PASTP prep|to
+	n:prop|Sarah~poss|s n|house ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|3|XMOD 5|4|JCT 6|8|MOD 7|6|POSS 8|5|POBJ
+	9|2|PUNCT
+*CHI:	why can't I go ?
+%mor:	adv:int|why mod|can~neg|not pro:sub|I v|go ?
+%gra:	1|5|LINK 2|5|AUX 3|2|NEG 4|5|SUBJ 5|0|ROOT 6|5|PUNCT
+*CHI:	what did she eat ?
+%mor:	pro:int|what mod|do&PAST pro:sub|she v|eat ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	where (i)s you done [*] ?
+%mor:	adv:int|where aux|be&3S pro:per|you part|do&PASTP ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	what have you done ?
+%mor:	pro:int|what v|have pro:per|you part|do&PASTP ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|SUBJ 4|2|COMP 5|2|PUNCT
+*CHI:	what is it called ?
+%mor:	pro:int|what aux|be&3S pro:per|it v|call-PAST ?
+%gra:	1|4|SUBJ 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	where (i)s daddy going ?
+%mor:	adv:int|where cop|be&3S n|daddy part|go-PRESP ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|3|XMOD 5|2|PUNCT
+@End

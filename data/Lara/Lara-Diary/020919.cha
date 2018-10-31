@@ -1,0 +1,128 @@
+@UTF8
+@PID:	11312/c-00018018-1
+@Begin
+@Languages:	eng
+@Participants:	CHI Lara Target_Child
+@ID:	eng|Lara|CHI|2;09.19|female|||Target_Child|||
+@Date:	07-MAR-1997
+@Comment:	Mum Dad Elsie
+*CHI:	where (ha)s Amy gone ?
+%mor:	adv:int|where aux|have&3S n:prop|Amy part|go&PASTP ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	where (i)s Amy ?
+%mor:	adv:int|where cop|be&3S n:prop|Amy ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	what (i)s that funny noise ?
+%mor:	pro:int|what cop|be&3S pro:dem|that adj|fun&dn-Y n|noise ?
+%gra:	1|2|LINK 2|0|ROOT 3|5|DET 4|5|MOD 5|2|PRED 6|2|PUNCT
+*CHI:	where (i)s my Mummy and Daddy ?
+%mor:	adv:int|where aux|be&3S co|my n:prop|Mummy coord|and n:prop|Daddy ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|COM 4|2|PRED 5|4|CONJ 6|5|COORD 7|2|PUNCT
+*CHI:	what (i)s that ?
+%mor:	pro:int|what cop|be&3S pro:dem|that ?
+%gra:	1|2|SUBJ 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	what did I do ?
+%mor:	pro:int|what mod|do&PAST pro:sub|I v|do ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	what you doing ?
+%mor:	pro:int|what pro:per|you part|do-PRESP ?
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|3|PUNCT
+*CHI:	where (ha)s my Mummy gone ?
+%mor:	adv:int|where v|have&3S det:poss|my n:prop|Mummy part|go&PASTP ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|MOD 4|2|OBJ 5|2|XJCT 6|2|PUNCT
+*CHI:	where (i)s Daddy ?
+%mor:	adv:int|where cop|be&3S n:prop|Daddy ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	where (i)s the lady ?
+%mor:	adv:int|where cop|be&3S det:art|the n|lady ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|DET 4|2|PRED 5|2|PUNCT
+*CHI:	what (i)s this ?
+%mor:	pro:int|what cop|be&3S pro:dem|this ?
+%gra:	1|2|SUBJ 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	what (i)s inside it ?
+%mor:	pro:int|what cop|be&3S prep|inside pro:per|it ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|JCT 4|3|POBJ 5|2|PUNCT
+*CHI:	who (ha)s got the tree ?
+%mor:	pro:rel|who aux|have&3S part|get&PASTP det:art|the n|tree ?
+%gra:	1|3|LINK 2|3|AUX 3|0|ROOT 4|5|DET 5|3|OBJ 6|3|PUNCT
+*CHI:	what (i)s this ?
+%mor:	pro:int|what cop|be&3S pro:dem|this ?
+%gra:	1|2|SUBJ 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	what did Amy do ?
+%mor:	pro:int|what mod|do&PAST n:prop|Amy v|do ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	why you poorly ?
+%mor:	adv:int|why pro:per|you adv|poor&dadj-LY ?
+%gra:	1|0|INCROOT 2|1|OBJ 3|2|JCT 4|1|PUNCT
+*CHI:	who want the last one ?
+%mor:	pro:rel|who v|want det:art|the adj|last pro:indef|one ?
+%gra:	1|2|LINK 2|0|ROOT 3|5|DET 4|5|MOD 5|2|OBJ 6|2|PUNCT
+*CHI:	what did you do ?
+%mor:	pro:int|what mod|do&PAST pro:per|you v|do ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	what did I do ?
+%mor:	pro:int|what mod|do&PAST pro:sub|I v|do ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	what (i)s these ?
+%mor:	pro:int|what cop|be&3S pro:dem|these ?
+%gra:	1|2|SUBJ 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	where (i)s Mummy going ?
+%mor:	adv:int|where cop|be&3S n:prop|Mummy part|go-PRESP ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|3|XMOD 5|2|PUNCT
+*CHI:	what (i)s that ?
+%mor:	pro:int|what cop|be&3S pro:dem|that ?
+%gra:	1|2|SUBJ 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	what (i)s that ?
+%mor:	pro:int|what cop|be&3S pro:dem|that ?
+%gra:	1|2|SUBJ 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	what (i)s that there ?
+%mor:	pro:int|what cop|be&3S pro:rel|that adv|there ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|3|JCT 5|2|PUNCT
+*CHI:	what (i)s that on sunroof ?
+%mor:	pro:int|what cop|be&3S pro:dem|that prep|on n|+n|sun+n|roof ?
+%gra:	1|2|SUBJ 2|0|ROOT 3|2|PRED 4|3|JCT 5|4|POBJ 6|2|PUNCT
+*CHI:	what I got on ?
+%mor:	pro:int|what pro:sub|I v|get&PAST adv|on ?
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|3|JCT 5|3|PUNCT
+*CHI:	what Amy doing ?
+%mor:	pro:int|what n:prop|Amy part|do-PRESP ?
+%gra:	1|3|LINK 2|3|AUX 3|0|ROOT 4|3|PUNCT
+*CHI:	where (ha)s Martin gone ?
+%mor:	adv:int|where aux|have&3S n:prop|Martin part|go&PASTP ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	where (ha)s the little woods gone ?
+%mor:	adv:int|where v|have&3S det:art|the adj|little n|wood-PL
+	part|go&PASTP ?
+%gra:	1|2|LINK 2|0|ROOT 3|5|DET 4|5|MOD 5|2|OBJ 6|5|XMOD 7|2|PUNCT
+*CHI:	where (i)s Elsie_Grandma's house ?
+%mor:	adv:int|where cop|be&3S n:prop|Elsie_Grandma~poss|s n|house ?
+%gra:	1|2|LINK 2|0|ROOT 3|5|MOD 4|3|POSS 5|2|PRED 6|2|PUNCT
+*CHI:	what did you do ?
+%mor:	pro:int|what mod|do&PAST pro:per|you v|do ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	why have stop at roundabout ?
+%mor:	adv:int|why v|have n|stop prep|at n|roundabout ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|OBJ 4|2|JCT 5|4|POBJ 6|2|PUNCT
+%com:	after mum says because we have to
+*CHI:	where (ha)s Daddy gone ?
+%mor:	adv:int|where aux|have&3S n:prop|Daddy part|go&PASTP ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	what to do ?
+%mor:	pro:int|what inf|to v|do ?
+%gra:	1|3|LINK 2|3|INF 3|0|ROOT 4|3|PUNCT
+*CHI:	what did you do ?
+%mor:	pro:int|what mod|do&PAST pro:per|you v|do ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	where are you going ?
+%mor:	adv:int|where aux|be&PRES pro:per|you part|go-PRESP ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	where (ha)s Elsie_Grandma gone ?
+%mor:	adv:int|where aux|have&3S n:prop|Elsie_Grandma part|go&PASTP ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	what (i)s that ?
+%mor:	pro:int|what cop|be&3S pro:dem|that ?
+%gra:	1|2|SUBJ 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	what (i)s that building called ?
+%mor:	pro:int|what cop|be&3S pro:dem|that n|building v|call-PAST ?
+%gra:	1|2|LINK 2|5|LINK 3|4|DET 4|5|SUBJ 5|0|ROOT 6|5|PUNCT
+@End

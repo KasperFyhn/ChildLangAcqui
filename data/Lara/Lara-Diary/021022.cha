@@ -1,0 +1,68 @@
+@UTF8
+@PID:	11312/c-00018048-1
+@Begin
+@Languages:	eng
+@Participants:	CHI Lara Target_Child
+@ID:	eng|Lara|CHI|2;10.22|female|||Target_Child|||
+@Date:	07-APR-1997
+@Comment:	Mum Dad
+*CHI:	where have Mummy's shoes gone ?
+%mor:	adv:int|where v|have n:prop|Mummy~poss|s n|shoe-PL part|go&PASTP ?
+%gra:	1|2|LINK 2|0|ROOT 3|5|MOD 4|3|POSS 5|2|OBJ 6|5|XMOD 7|2|PUNCT
+*CHI:	where was they ?
+%mor:	adv:int|where cop|be&PAST&13S pro:sub|they ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	where (i)s my other sock ?
+%mor:	adv:int|where aux|be&3S co|my qn|other n|sock ?
+%gra:	1|2|LINK 2|0|ROOT 3|5|COM 4|5|QUANT 5|2|PRED 6|2|PUNCT
+*CHI:	where are you going ?
+%mor:	adv:int|where aux|be&PRES pro:per|you part|go-PRESP ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	where (ha)s my tights gone ?
+%mor:	adv:int|where v|have&3S det:poss|my n:pt|tights part|go&PASTP ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|MOD 4|2|OBJ 5|2|XJCT 6|2|PUNCT
+*CHI:	what with ?
+%mor:	pro:int|what prep|with ?
+%gra:	1|2|LINK 2|0|INCROOT 3|2|PUNCT
+*CHI:	what are you doing ?
+%mor:	pro:int|what aux|be&PRES pro:per|you part|do-PRESP ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	why have you got those on ?
+%mor:	adv:int|why v|have pro:per|you v|get&PAST pro:dem|those prep|on ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|SUBJ 4|2|COMP 5|4|OBJ 6|4|JCT 7|2|PUNCT
+*CHI:	where (ha)s the little girl gone ?
+%mor:	adv:int|where v|have&3S det:art|the adj|little n|girl part|go&PASTP
+	?
+%gra:	1|2|LINK 2|0|ROOT 3|5|DET 4|5|MOD 5|2|OBJ 6|5|XMOD 7|2|PUNCT
+*CHI:	where (i)s the little boy ?
+%mor:	adv:int|where cop|be&3S det:art|the adj|little n|boy ?
+%gra:	1|2|LINK 2|0|ROOT 3|5|DET 4|5|MOD 5|2|PRED 6|2|PUNCT
+*CHI:	where (i)s your cup of tea then ?
+%mor:	adv:int|where cop|be&3S det:poss|your n|cup prep|of n|tea
+	adv:tem|then ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|MOD 4|2|PRED 5|4|NJCT 6|5|POBJ 7|2|JCT 8|2|PUNCT
+*CHI:	what is it ?
+%mor:	pro:int|what aux|be&3S pro:per|it ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	where (i)s your eggs ?
+%mor:	adv:int|where cop|be&3S det:poss|your n|egg-PL ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|MOD 4|2|PRED 5|2|PUNCT
+*CHI:	what you doing ?
+%mor:	pro:int|what pro:per|you part|do-PRESP ?
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|3|PUNCT
+*CHI:	what is it ?
+%mor:	pro:int|what aux|be&3S pro:per|it ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	what did he scratch ?
+%mor:	pro:int|what mod|do&PAST pro:sub|he v|scratch ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	what are you doing ?
+%mor:	pro:int|what aux|be&PRES pro:per|you part|do-PRESP ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	where are we going ?
+%mor:	adv:int|where cop|be&PRES pro:sub|we part|go-PRESP ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|SUBJ 4|2|PRED 5|2|PUNCT
+*CHI:	what is making that stuck ?
+%mor:	pro:int|what aux|be&3S part|make-PRESP pro:rel|that v|stick&PAST ?
+%gra:	1|3|LINK 2|3|AUX 3|0|ROOT 4|5|LINK 5|3|COMP 6|3|PUNCT
+@End

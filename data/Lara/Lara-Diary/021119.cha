@@ -1,0 +1,42 @@
+@UTF8
+@PID:	11312/c-00018075-1
+@Begin
+@Languages:	eng
+@Participants:	CHI Lara Target_Child
+@ID:	eng|Lara|CHI|2;11.19|female|||Target_Child|||
+@Date:	04-MAY-1997
+@Comment:	Mum Dad Grandma
+*CHI:	what were you doing ?
+%mor:	pro:int|what cop|be&PAST pro:per|you part|do-PRESP ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|3|XMOD 5|2|PUNCT
+*CHI:	where (i)s Ben ?
+%mor:	adv:int|where cop|be&3S n:prop|Ben ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	where has Ben gone ?
+%mor:	adv:int|where aux|have&3S n:prop|Ben part|go&PASTP ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	where has my sleeves gone ?
+%mor:	adv:int|where v|have&3S det:poss|my n|sleeve-PL part|go&PASTP ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|MOD 4|2|OBJ 5|2|XJCT 6|2|PUNCT
+*CHI:	why don't Amy go in here ?
+%mor:	adv:int|why mod|do~neg|not n:prop|Amy v|go prep|in adv|here ?
+%gra:	1|5|LINK 2|5|AUX 3|2|NEG 4|5|SUBJ 5|0|ROOT 6|5|JCT 7|6|POBJ 8|5|PUNCT
+*CHI:	how do you do it ?
+%mor:	adv:int|how mod|do pro:per|you v|do pro:per|it ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|OBJ 6|4|PUNCT
+*CHI:	where has my plate gone ?
+%mor:	adv:int|where v|have&3S det:poss|my n|plate part|go&PASTP ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|MOD 4|2|OBJ 5|2|XJCT 6|2|PUNCT
+*CHI:	where (i)s Daddy going ?
+%mor:	adv:int|where cop|be&3S n:prop|Daddy part|go-PRESP ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|3|XMOD 5|2|PUNCT
+*CHI:	what are you doing ?
+%mor:	pro:int|what aux|be&PRES pro:per|you part|do-PRESP ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	where has my stool gone ?
+%mor:	adv:int|where v|have&3S det:poss|my n|stool part|go&PASTP ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|MOD 4|2|OBJ 5|2|XJCT 6|2|PUNCT
+*CHI:	why is it there ?
+%mor:	adv:int|why aux|be&3S pro:per|it adv|there ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|3|JCT 5|2|PUNCT
+@End

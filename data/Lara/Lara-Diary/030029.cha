@@ -1,0 +1,52 @@
+@UTF8
+@PID:	11312/c-00018116-1
+@Begin
+@Languages:	eng
+@Participants:	CHI Lara Target_Child
+@ID:	eng|Lara|CHI|3;00.29|female|||Target_Child|||
+@Date:	14-JUN-1997
+*CHI:	what have you got in your mouth ?
+%mor:	pro:int|what v|have pro:per|you v|get&PAST prep|in det:poss|your
+	n|mouth ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|SUBJ 4|2|COMP 5|4|JCT 6|7|MOD 7|5|POBJ 8|2|PUNCT
+*CHI:	what have you got in your hand ?
+%mor:	pro:int|what v|have pro:per|you v|get&PAST prep|in det:poss|your
+	n|hand ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|SUBJ 4|2|COMP 5|4|JCT 6|7|MOD 7|5|POBJ 8|2|PUNCT
+*CHI:	why (i)s mummy driving ?
+%mor:	adv:int|why cop|be&3S n|mummy part|drive-PRESP ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|3|XMOD 5|2|PUNCT
+*CHI:	which way do we go ?
+%mor:	pro:rel|which adv|way mod|do pro:sub|we v|go ?
+%gra:	1|3|LINK 2|3|JCT 3|5|AUX 4|5|SUBJ 5|0|ROOT 6|5|PUNCT
+*CHI:	what did Amy do ?
+%mor:	pro:int|what mod|do&PAST n:prop|Amy v|do ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|PUNCT
+*CHI:	why (a)re you looking in that book ?
+%mor:	adv:int|why aux|be&PRES pro:per|you part|look-PRESP prep|in
+	pro:dem|that n|book ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|JCT 6|7|DET 7|5|POBJ 8|4|PUNCT
+*CHI:	what (i)s she having ?
+%mor:	pro:int|what cop|be&3S pro:sub|she part|have-PRESP ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|SUBJ 4|2|PRED 5|2|PUNCT
+*CHI:	why do you have to ride on little ponys ?
+%mor:	adv:int|why mod|do pro:per|you v|have prep|to n|ride adv|on
+	adj|little n|pony-PL ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|JCT 6|5|POBJ 7|9|MOD 8|9|MOD
+	9|4|JCT 10|4|PUNCT
+*CHI:	why don't they come out ?
+%mor:	adv:int|why mod|do~neg|not pro:sub|they v|come adv|out ?
+%gra:	1|5|LINK 2|5|AUX 3|2|NEG 4|5|SUBJ 5|0|ROOT 6|5|JCT 7|5|PUNCT
+*CHI:	how do you do this ?
+%mor:	adv:int|how mod|do pro:per|you v|do pro:dem|this ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|OBJ 6|4|PUNCT
+*CHI:	why are we going home ?
+%mor:	adv:int|why aux|be&PRES pro:sub|we part|go-PRESP n|home ?
+%gra:	1|4|LINK 2|4|AUX 3|4|SUBJ 4|0|ROOT 5|4|JCT 6|4|PUNCT
+*CHI:	why is it a bumpy road ?
+%mor:	adv:int|why aux|be&3S pro:per|it det:art|a adj|bump&dv-Y n|road ?
+%gra:	1|2|LINK 2|0|ROOT 3|6|SUBJ 4|6|DET 5|6|MOD 6|2|PRED 7|2|PUNCT
+*CHI:	what is all that mud ?
+%mor:	pro:int|what cop|be&3S qn|all pro:dem|that n|mud ?
+%gra:	1|2|LINK 2|0|ROOT 3|5|QUANT 4|5|DET 5|2|PRED 6|2|PUNCT
+@End

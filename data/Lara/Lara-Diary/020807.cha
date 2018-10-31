@@ -1,0 +1,18 @@
+@UTF8
+@PID:	11312/c-00017975-1
+@Begin
+@Languages:	eng
+@Participants:	CHI Lara Target_Child
+@ID:	eng|Lara|CHI|2;08.07|female|||Target_Child|||
+@Date:	23-JAN-1997
+@Comment:	Mum Dad Elsie
+*CHI:	where (i)s bikes ?
+%mor:	adv:int|where cop|be&3S n|bike-PL ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	what (i)s that ?
+%mor:	pro:int|what cop|be&3S pro:dem|that ?
+%gra:	1|2|SUBJ 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	where (i)s Mummy's bed ?
+%mor:	adv:int|where cop|be&3S n:prop|Mummy~poss|s n|bed ?
+%gra:	1|2|LINK 2|0|ROOT 3|5|MOD 4|3|POSS 5|2|PRED 6|2|PUNCT
+@End

@@ -1,0 +1,84 @@
+@UTF8
+@PID:	11312/c-00017973-1
+@Begin
+@Languages:	eng
+@Participants:	CHI Lara Target_Child
+@ID:	eng|Lara|CHI|2;08.05|female|||Target_Child|||
+@Date:	21-JAN-1997
+@Comment:	Dad Mum Grandma and Grandad
+*CHI:	why I have Pepsi_Max ?
+%mor:	adv:int|why pro:sub|I v|have n:prop|Pepsi_Max ?
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|3|OBJ 5|3|PUNCT
+%com:	after why what
+*CHI:	why you got white pillow ?
+%mor:	adv:int|why pro:per|you v|get&PAST n|white n|pillow ?
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|5|MOD 5|3|OBJ 6|3|PUNCT
+%com:	after why what
+*CHI:	why it morning ?
+%mor:	adv:int|why pro:per|it n|morning ?
+%gra:	1|3|LINK 2|3|MOD 3|0|INCROOT 4|3|PUNCT
+%com:	after why what
+*CHI:	what about her teething ring ?
+%mor:	pro:int|what prep|about pro:obj|her part|teethe-PRESP n|ring ?
+%gra:	1|0|INCROOT 2|1|JCT 3|5|MOD 4|5|MOD 5|2|POBJ 6|1|PUNCT
+*CHI:	where (i)s Grandad going ?
+%mor:	adv:int|where cop|be&3S n:prop|Grandad part|go-PRESP ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|3|XMOD 5|2|PUNCT
+*CHI:	why (ha)s it all gone ?
+%mor:	adv:int|why aux|have&3S pro:per|it adv|all part|go&PASTP ?
+%gra:	1|5|LINK 2|5|AUX 3|5|SUBJ 4|5|JCT 5|0|ROOT 6|5|PUNCT
+%com:	after why what
+*CHI:	where (i)s three little pigs ?
+%mor:	adv:int|where aux|be&3S det:num|three adj|little n|pig-PL ?
+%gra:	1|5|SUBJ 2|5|AUX 3|5|QUANT 4|5|MOD 5|0|INCROOT 6|5|PUNCT
+*CHI:	why they crying ?
+%mor:	adv:int|why pro:sub|they part|cry-PRESP ?
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|3|PUNCT
+*CHI:	where (ha)s their Mummy gone ?
+%mor:	adv:int|where aux|have&3S det:poss|their n:prop|Mummy part|go&PASTP
+	?
+%gra:	1|5|LINK 2|5|AUX 3|4|MOD 4|5|SUBJ 5|0|ROOT 6|5|PUNCT
+*CHI:	why scratched herself ?
+%mor:	adv:int|why part|scratch-PASTP pro:refl|herself ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|OBJ 4|2|PUNCT
+%com:	after why what
+@Comment:	Grandma and Grandad leave and Mum returns
+*CHI:	why man not here yet ?
+%mor:	adv:int|why n|man neg|not adv|here adv|yet ?
+%gra:	1|2|LINK 2|0|INCROOT 3|2|NEG 4|5|JCT 5|2|JCT 6|2|PUNCT
+%com:	after why what
+*CHI:	where (i)s Trumpton ?
+%mor:	adv:int|where cop|be&3S n:prop|Trumpton ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	where (i)s the man ?
+%mor:	adv:int|where cop|be&3S det:art|the n|man ?
+%gra:	1|2|LINK 2|0|ROOT 3|4|DET 4|2|PRED 5|2|PUNCT
+*CHI:	why it timer ?
+%mor:	adv:int|why pro:per|it n|time&dv-AGT ?
+%gra:	1|3|LINK 2|3|MOD 3|0|INCROOT 4|3|PUNCT
+%com:	after why what
+*CHI:	where the biddomer@c .
+%mor:	adv:int|where det:art|the chi|biddomer .
+%gra:	1|3|LINK 2|3|DET 3|0|INCROOT 4|3|PUNCT
+*CHI:	why he gonna [: going to] mend it ?
+%mor:	adv:int|why pro:sub|he part|go-PRESP inf|to v|mend pro:per|it ?
+%gra:	1|3|LINK 2|3|SUBJ 3|0|ROOT 4|5|INF 5|3|COMP 6|5|OBJ 7|3|PUNCT
+%com:	after why what
+*CHI:	what (i)s that ?
+%mor:	pro:int|what cop|be&3S pro:dem|that ?
+%gra:	1|2|SUBJ 2|0|ROOT 3|2|PRED 4|2|PUNCT
+*CHI:	where (i)s all the things ?
+%mor:	adv:int|where aux|be&3S qn|all det:art|the n|thing-PL ?
+%gra:	1|5|SUBJ 2|5|AUX 3|5|QUANT 4|5|DET 5|0|INCROOT 6|5|PUNCT
+*CHI:	where (ha)s his hat gone ?
+%mor:	adv:int|where aux|have&3S det:poss|his n|hat part|go&PASTP ?
+%gra:	1|5|LINK 2|5|AUX 3|4|MOD 4|5|SUBJ 5|0|ROOT 6|5|PUNCT
+*CHI:	where (ha)s the two things gone ?
+%mor:	adv:int|where v|have&3S det:art|the det:num|two n|thing-PL
+	part|go&PASTP ?
+%gra:	1|2|LINK 2|0|ROOT 3|5|DET 4|5|QUANT 5|2|OBJ 6|5|XMOD 7|2|PUNCT
+*CHI:	why got coat on ?
+%mor:	adv:int|why v|get&PAST n|coat adv|on ?
+%gra:	1|2|LINK 2|0|ROOT 3|2|OBJ 4|2|JCT 5|2|PUNCT
+%com:	after why what
+@End
