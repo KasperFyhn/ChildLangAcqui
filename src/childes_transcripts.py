@@ -32,11 +32,18 @@ class Transcript:
             print('An error occured when loading:', filepath)
             print('Error message:', e)
     
-    def lines_as_tuples(self):
+    def lines_as_tuples(self, speakers='all'):
         '''Return a list of tuples of all utterance lines, where tuple[0] is
         the three letter initials for the speaker and tuple[1] is the line.'''
         
-        return [(line[1:4], line[5:]) for line in self.lines]
+        tuples = [(line[1:4], line[5:]) for line in self.lines]
+        
+        if not speakers == 'all':
+            if type(speakers) == str:
+                speakers = [speakers] 
+            tuples = [line for line in tuples if line[0] in speakers]
+            
+        return tuples
     
     def tokens(self, speakers='all'):
         '''Return a list of tokens uttered by the specified speaker(s). If no
@@ -287,4 +294,3 @@ def plot_ttr_over_time(transcripts, child='CHI', speakers=['CHI', 'MOT'],
     plt.show()
     
     return
-
