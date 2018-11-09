@@ -1,6 +1,6 @@
 import os
 from collections import Counter
-from string import punctuation as pnc
+from string import punctuation
 import matplotlib.pyplot as plt
 import glob
 
@@ -24,7 +24,8 @@ class Transcript:
             # extract headerlines and transcriptlines
             text = self.raw_transcript.split('\n')
             self.headers = [line for line in text if line.startswith('@')]
-            self.lines = [line for line in text if line.startswith('*')]
+            self.lines = [line for line in text
+                          if line.startswith('*') or line.startswith('%')]
             self.fully_loaded = True # flag that transcript is fully loaded
             
         except IOError as e:
@@ -32,17 +33,51 @@ class Transcript:
             print('An error occured when loading:', filepath)
             print('Error message:', e)
     
-    def lines_as_tuples(self, speakers='all'):
+    def lines_as_tuples(self, speakers='all', morphosyntax=False,
+                        grammar=False, actions=False):
         '''Return a list of tuples of all utterance lines, where tuple[0] is
-        the three letter initials for the speaker and tuple[1] is the line.'''
+        the three letter initials for the speaker and tuple[1] is the line. One
+        or more speakers can be specified to retrieve just lines by these. Mark
+        the corresponding flags to get annotations for each '''
         
-        tuples = [(line[1:4], line[5:]) for line in self.lines]
+        if speakers == 'all':
+            speakers = self.speakers()
+        if type(speakers) == str: # make sure that it is a list
+            speakers = [speakers]
         
-        if not speakers == 'all':
-            if type(speakers) == str:
-                speakers = [speakers] 
-            tuples = [line for line in tuples if line[0] in speakers]
-            
+        # check if the requested speakers are present in the transcript
+        # and report if they are not
+        for speaker in speakers:
+            if speaker not in self.speakers():
+                print(f'WARNING: The speaker {speaker} is not present ' +
+                      f'in the transcript {self.name}.')
+              
+        if morphosyntax == True:
+            speakers.append('mor')
+        if grammar == True:
+            speakers.append('gra')
+        if actions == True:
+            speakers.append('act')
+        
+        # make list with lines as three part tuples
+        tuples = [(line[0], line[1:4], line[5:]) for line in self.lines]
+        
+        # divide into blocks of turns with their annotations
+        blocks = []
+        for line in tuples:
+            if line[0] == '*':
+                blocks.append([])
+                blocks[-1] = [(line[1], line[2])]
+            elif line[0] == '%':
+                blocks[-1].append((line[1], line[2]))
+        
+        # put together the blocks of the requested speakers along with the
+        # requested annotations
+        tuples = []
+        for block in blocks:
+            if block[0][0] in speakers:
+                tuples += [line for line in block if line[0] in speakers]
+        
         return tuples
     
     def tokens(self, speakers='all'):
@@ -51,24 +86,16 @@ class Transcript:
         
         if speakers == 'all':
             speakers = self.speakers()
-        
         if type(speakers) == str:
             speakers = [speakers]
-        
-        # check if the requested speakers are present in the transcript
-        for speaker in speakers:
-            if speaker not in self.speakers():
-                print(f'WARNING: The speaker {speaker} is not present ' +
-                      f'in the transcript {self.name}.')             
-            
+
         # get tokens from the specified speakers
-        tokens = [word.lower()
-                  for tpl in self.lines_as_tuples() if tpl[0] in speakers
-                  for word in tpl[1].split()]
+        tuples = self.lines_as_tuples(speakers)
+        tokens = [word.lower() for tpl in tuples for word in tpl[1].split()]
         
         # clean for punctuation
         tokens = ' '.join(tokens)
-        tokens = ''.join(c for c in tokens if c not in pnc)
+        tokens = ''.join(c for c in tokens if c not in punctuation)
         tokens = tokens.split()
         
         return tokens
@@ -114,7 +141,7 @@ class Transcript:
     def speakers(self):
         '''Return a list of all speakers that appear in the transcript'''
 
-        return list({line[1:4] for line in self.lines})
+        return list({line[1:4] for line in self.lines if line.startswith('*')})
     
     def speaker_details(self):
         '''Return a dictionary of dictionaries containing details about the
