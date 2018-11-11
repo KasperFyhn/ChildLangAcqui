@@ -37,8 +37,9 @@ class Transcript:
                         grammar=False, actions=False):
         '''Return a list of tuples of all utterance lines, where tuple[0] is
         the three letter initials for the speaker and tuple[1] is the line. One
-        or more speakers can be specified to retrieve just lines by these. Mark
-        the corresponding flags to get annotations for each '''
+        or more speakers can be specified to retrieve just lines by these and 
+        one or more flags can be marked to get annotations for the requested
+        speaker(s).'''
         
         if speakers == 'all':
             speakers = self.speakers()
