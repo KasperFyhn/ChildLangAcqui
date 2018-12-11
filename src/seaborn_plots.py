@@ -47,3 +47,5 @@ def plot_wordgroup_freq(wordgroup, transcripts, speaker='CHI'):
     sns.lmplot(x='age', y='word group frequency', data=data)  
     
     return
+
+
