@@ -43,6 +43,7 @@ class Transcript:
             print('An error occured when loading:', filepath)
             print('Error message:', e)
 
+#TODO: change to annotations=False
     def lines_as_tuples(self, speakers='all', morphosyntax=False,
                         grammar=False, actions=False, as_blocks=False):
         """Return a list of tuples of all utterance lines, where tuple[0] is
