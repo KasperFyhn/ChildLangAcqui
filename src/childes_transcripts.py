@@ -43,9 +43,8 @@ class Transcript:
             print('An error occured when loading:', filepath)
             print('Error message:', e)
 
-#TODO: change to annotations=False
-    def lines_as_tuples(self, speakers='all', morphosyntax=False,
-                        grammar=False, actions=False, as_blocks=False):
+    def lines_as_tuples(self, speakers='all', annotations=False,
+                        as_blocks=False):
         """Return a list of tuples of all utterance lines, where tuple[0] is
         the three letter initials for the speaker and tuple[1] is the line. One
         or more speakers can be specified to retrieve just lines by these and 
@@ -64,13 +63,6 @@ class Transcript:
             if speaker not in self.speakers():
                 print(f'WARNING: The speaker {speaker} is not present ' +
                       f'in the transcript {self.name}.')
-              
-        if morphosyntax:
-            speakers.append('mor')
-        if grammar:
-            speakers.append('gra')
-        if actions:
-            speakers.append('act')
         
         # make list with lines as three part tuples
         tuples = [(line[0], line[1:4], line[5:]) for line in self.lines]
@@ -80,7 +72,7 @@ class Transcript:
         for line in tuples:
             if line[0] == '*':
                 blocks.append([(line[1], line[2])])
-            elif line[0] == '%' and line[1] in speakers:
+            elif line[0] == '%' and annotations == True:
                 blocks[-1].append((line[1], line[2]))
 
         blocks = [block for block in blocks if block[0][0] in speakers]
@@ -88,12 +80,14 @@ class Transcript:
         if as_blocks:
             return blocks
 
-        # put together the blocks of the requested speakers along with the
-        # requested annotations
+        # put together the blocks of the requested speakers with annotations
+        # if requested
         tuples = []
         for block in blocks:
-            if block[0][0] in speakers:
+            if block[0][0] in speakers and not annotations:
                 tuples += [line for line in block if line[0] in speakers]
+            elif block[0][0] in speakers and  annotations:
+                tuples += [line for line in block]
         
         return tuples
 
@@ -139,7 +133,7 @@ class Transcript:
         """Return the MLU for the given speaker, the target child as default,
          in the transcript. """
 
-        blocks = self.lines_as_tuples(speakers=speaker, morphosyntax=True,
+        blocks = self.lines_as_tuples(speakers=speaker, annotations=True,
                                       as_blocks=True)
 
         # filter out utterances containing the disregarded words
@@ -152,11 +146,10 @@ class Transcript:
             if not unclear:
                 lines += block
 
-        annotation = [line[1] for line in lines if line[0] == 'mor']
+        annotation = [clean_line(line[1]) for line in lines if line[0] == 'mor']
         morphemes = []
         for line in annotation:
             words = line.split()
-            words = [word for word in words if word not in punctuation]
             for word in words:
                 word = re.split('[-~#]', word)
                 morphemes += word
@@ -260,6 +253,16 @@ def age_in_months(age):
     total = years * 12 + months + days / 30
     
     return float(f'{total:.2f}')
+
+
+def clean_line(line):
+    """Clean a string for ' .', ' ?', ' !'"""
+
+    remove_list = [' .', ' ?', ' !']
+    for item in remove_list:
+        line = line.replace(item, '')
+
+    return line
 
 
 def word_freqs_all(transcripts, speakers='all'):

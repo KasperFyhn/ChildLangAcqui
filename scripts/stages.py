@@ -1,12 +1,10 @@
 import childes_transcripts as ts
-import re
 import pandas as pd
 
+
 def main():
-    #data = input('Please, input the data folder')
-    transcripts = ts.load_all_from_dir(
-        r'C:\Users\Kasper Fyhn Jacobsen\Dropbox\Child Language Acquisition\Data\Brown\Sarah'
-    )
+    data = input('Please, input the data folder')
+    transcripts = ts.load_all_from_dir(data)
 
     ages = [ts.age_in_months(tran.speaker_details()['CHI']['age'])
             for tran in transcripts]
@@ -14,11 +12,10 @@ def main():
     df = pd.DataFrame({'ages': ages, 'MLU': mlus})
 
     for t in transcripts:
-        print(in_second_stage(t))
+        print(in_fourth_stage(t))
 
 
-
-def zero_stage(transcript, threshold=0.95):
+def in_zeroth_stage(transcript, threshold=0.95):
     """Return true if the proportion of holophrases uttered by the child exceeds
     the given holophrase proportion threshold."""
 
@@ -47,28 +44,26 @@ def zero_stage(transcript, threshold=0.95):
 
 def in_first_stage(transcript):
     """Determine if the child is in/has passed the first stage of acquisition
-    by checking for clues for knowledge of semantic relations in the given
-    transcript. Clues include sentences with subject and verb, ..."""
+    by checking if s/he has passed stage 0, yet not reached stage 2."""
 
-    lines = get_morphosyntax_lines(transcript)
-
-    agent_patient_sentence = 0
-    for line in lines:
-        line = line.split(' ')
-        #for tag in line:
+    if not in_zeroth_stage(transcript) and not in_second_stage(transcript):
+        return True
+    else:
+        return False
 
 
-
-def in_second_stage(transcript, threshold = 0.05):
+def in_second_stage(transcript, inflection_threshold=0.05,
+                    function_words_threshold=0.2):
     """Determine if the child is in/has passed the second stage of acquisition
-    by checking for inflections in the child's utterances.
-    """
-#TODO: Check for productivity in some way!
+    by checking for inflections in the child's utterances."""
+
+    #TODO: check for clitics?
 
     inflected_words = 0
+    function_words = 0
     words_total = 0
 
-    lines = get_morphosyntax_lines(transcript)
+    lines = get_morphosyntax_lines(transcript, imitations=False)
 
     for line in lines:
         line = line.split()
@@ -76,22 +71,65 @@ def in_second_stage(transcript, threshold = 0.05):
         for word in line:
             if len(word.split('-')) > 1:
                 inflected_words += 1
+            elif is_function_word(word):
+                function_words += 1
 
-    if inflected_words / words_total > threshold:
-        return inflected_words / words_total, True
+    prop_function_words = function_words / words_total
+    prop_inflected_words = inflected_words / (words_total - function_words)
+
+    if (prop_function_words > function_words_threshold
+            and prop_inflected_words > inflection_threshold):
+        return len(lines), prop_function_words, prop_inflected_words, True
     else:
-        return inflected_words / words_total, False
+        return len(lines), prop_function_words, prop_inflected_words, False
 
 
-def in_third_stage(transcript):
-    #TODO: based on different sentence types
+def in_third_stage(transcript, threshold=0.2):
+    #TODO: based on different sentence types and the appearance of mod's/aux's
     """"""
-    pass
+
+    lines = get_morphosyntax_lines(transcript, imitations=False, clean=False)
+    questions = [clean_line(line) for line in lines if '?' in line]
+
+    interrogative_with_verb = 0
+    interrogative_with_aux = 0
+
+    for question in questions:
+        verb = False
+        aux = False
+        wordtags = question.split()
+        for wordtag in wordtags:
+            class_ = wordtag.split('|')[0]
+            if 'v' in class_ or 'part' in class_:
+                verb = True
+            elif 'mod' in class_ or 'aux' in class_ or 'inf' in class_:
+                aux = True
+        if verb:
+            interrogative_with_verb += 1
+            if aux:
+                interrogative_with_aux += 1
+
+    if interrogative_with_aux / len(questions) > threshold:
+        return interrogative_with_aux / len(questions), True
+    else:
+        return interrogative_with_aux / len(questions), False
+
 
 def in_fourth_stage(transcript):
     # TODO: based on embedded sentences
 
-    pass
+    lines = get_grammar_lines(transcript, imitations=False)
+
+    embedded_sentence = 0
+
+    for line in lines:
+        if 'XCOMP' in line:
+            embedded_sentence += 1
+
+    if embedded_sentence > 20:
+        return True
+    else:
+        return False
 
 def in_fifth_stage(transcript):
     # TODO: based on coordinated sentences
@@ -99,31 +137,72 @@ def in_fifth_stage(transcript):
     pass
 
 
-def get_morphosyntax_lines(transcript, speaker='CHI'):
+def get_morphosyntax_lines(transcript, speaker='CHI', clean=True,
+                           imitations=True):
     """Return a list of only morphosyntactic tagging for stated speaker in the
     transcript."""
 
-    lines = transcript.lines_as_tuples(speakers=speaker, morphosyntax=True)
-    lines = [clean_line(line[1]) for line in lines if line[0] == 'mor']
+    blocks = transcript.lines_as_tuples(speakers=speaker, annotations=True,
+                                        as_blocks=True)
+    lines = []
+    for block in blocks:
+        if imitations or not ('spa', '$IMIT') in block:
+            lines += block
+
+    if clean:
+        lines = [clean_line(line[1]) for line in lines if line[0] == 'mor']
+    else:
+        lines = [line[1] for line in lines if line[0] == 'mor']
 
     return lines
 
 
-def get_grammar_lines(transcript, speaker='CHI'):
+def get_grammar_lines(transcript, speaker='CHI', imitations=True):
     """Return a list of only grammar tagging for stated speaker in the
     transcript."""
 
-    lines = transcript.lines_as_tuples(speakers=speaker, grammar=True)
+    blocks = transcript.lines_as_tuples(speakers=speaker, annotations=True,
+                                        as_blocks=True)
+    lines = []
+    for block in blocks:
+        if imitations or not ('spa', '$IMIT') in block:
+            lines += block
     lines = [clean_line(line[1]) for line in lines if line[0] == 'gra']
 
     return lines
 
-def is_nominal(wordtag):
-    """Return true if the word tag is noun, proper noun or pronoun."""
+def is_function_word(wordtag):
+    """Return true if the word is a function word."""
 
+    allowed_classes = {'aux',
+                       'conj',
+                       'coord',
+                       'cop',
+                       'det:art',
+                       'det:dem',
+                       'det:int',
+                       'det:num',
+                       'det:poss',
+                       'inf',
+                       'neg',
+                       'post',
+                       'prep',
+                       'pro:dem',
+                       'pro:exist',
+                       'pro:indef',
+                       'pro:int',
+                       'pro:obj',
+                       'pro:per',
+                       'pro:poss',
+                       'pro:refl',
+                       'pro:rel',
+                       'pro:sub', 'qn'
+                       }
 
-def is_verb(wordtag):
-    """Return true if the word tag is a verb."""
+    if wordtag.split('|')[0] in allowed_classes:
+        return True
+    else:
+        return False
 
 
 def clean_line(line):
