@@ -1,6 +1,6 @@
 import childes_transcripts as ts
 import pandas as pd
-
+from collections import Counter
 
 def main():
     data = input('Please, input the data folder')
@@ -123,10 +123,13 @@ def in_fourth_stage(transcript):
     embedded_sentence = 0
 
     for line in lines:
-        if 'XCOMP' in line:
+        roles = Counter([role.split('|')[-1] for role in line.split()])
+        if 'COMP' in roles and roles['SUBJ'] == 2:
             embedded_sentence += 1
+        elif
 
-    if embedded_sentence > 20:
+
+    if embedded_sentence > 5:
         return True
     else:
         return False
