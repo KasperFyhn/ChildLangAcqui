@@ -1,6 +1,7 @@
 import childes_transcripts as ts
 import pandas as pd
-from collections import Counter
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 def main():
     data = input('Please, input the data folder')
@@ -9,11 +10,95 @@ def main():
     ages = [ts.age_in_months(tran.speaker_details()['CHI']['age'])
             for tran in transcripts]
     mlus = [tran.mlu() for tran in transcripts]
-    df = pd.DataFrame({'ages': ages, 'MLU': mlus})
+    #stages = [determine_stage(tran) for tran in transcripts]
 
-    for t in transcripts:
-        print(in_fourth_stage(t))
+    prev_stage = 1
+    stages = []
+    for tran in transcripts:
+        stage = determine_stage(tran)
+        if stage > prev_stage:
+            prev_stage += 1
+            stages.append(prev_stage)
+        elif stage < prev_stage:
+            prev_stage -= 1
+            stages.append(prev_stage)
+        else:
+            stages.append(prev_stage)
 
+
+
+    df = pd.DataFrame({'age': ages, 'MLU': mlus, 'stage': stages})
+
+    print(df.head(len(df)))
+    sns.lmplot('MLU', 'stage', df)
+    plt.show()
+
+
+class DependencyStructure:
+
+    def __init__(self, line):
+
+        words = line.split()
+        self.words = [_Constituent(word) for word in words]
+        for const in self.words:
+            const.update_dependencies(self.words)
+
+    def root(self):
+
+        for word in self.words:
+            if word.role == 'ROOT' or word.role == 'INCROOT':
+                return word
+
+        return None
+
+    def roles(self):
+
+        return {const.role: const for const in self.words}
+
+    def get_item(self, index):
+
+        return self.words[index -1]
+
+
+class _Constituent:
+
+    def __init__(self, word):
+
+        parts = word.split('|')
+        self.index = parts[0]
+        self.head = parts[1]
+        self.role = parts[2]
+        self.dependencies = []
+
+    def update_dependencies(self, constituents):
+
+        for const in constituents:
+            if const.head == self.index:
+                self.dependencies.append(const)
+                const.head = self
+
+    def dependency_roles(self):
+
+        return {const.role: const for const in self.dependencies}
+
+
+def determine_stage(transcript):
+    """Returns the number of the stage that the transcript is assessed to."""
+
+    if in_fifth_stage(transcript) and in_fourth_stage(transcript):
+        return 5
+    elif in_fourth_stage(transcript) and in_third_stage(transcript):
+        return 4
+    elif in_third_stage(transcript) and in_second_stage(transcript):
+        return 3
+    elif in_second_stage(transcript):
+        return 2
+    elif in_first_stage(transcript):
+        return 1
+    elif in_zeroth_stage(transcript):
+        return 0
+    else:
+        return -1
 
 def in_zeroth_stage(transcript, threshold=0.95):
     """Return true if the proportion of holophrases uttered by the child exceeds
@@ -37,16 +122,16 @@ def in_zeroth_stage(transcript, threshold=0.95):
             holophrases += 1
 
     if (holophrases / len(utterances)) > threshold:
-        return holophrases / len(utterances), True
+        return True
     else:
-        return holophrases / len(utterances), False
+        return False
 
 
 def in_first_stage(transcript):
     """Determine if the child is in/has passed the first stage of acquisition
     by checking if s/he has passed stage 0, yet not reached stage 2."""
 
-    if not in_zeroth_stage(transcript) and not in_second_stage(transcript):
+    if not in_zeroth_stage(transcript):
         return True
     else:
         return False
@@ -67,6 +152,8 @@ def in_second_stage(transcript, inflection_threshold=0.05,
 
     for line in lines:
         line = line.split()
+        if len(line) < 2:
+            continue
         words_total += len(line)
         for word in line:
             if len(word.split('-')) > 1:
@@ -79,9 +166,9 @@ def in_second_stage(transcript, inflection_threshold=0.05,
 
     if (prop_function_words > function_words_threshold
             and prop_inflected_words > inflection_threshold):
-        return len(lines), prop_function_words, prop_inflected_words, True
+        return True
     else:
-        return len(lines), prop_function_words, prop_inflected_words, False
+        return False
 
 
 def in_third_stage(transcript, threshold=0.2):
@@ -90,6 +177,8 @@ def in_third_stage(transcript, threshold=0.2):
 
     lines = get_morphosyntax_lines(transcript, imitations=False, clean=False)
     questions = [clean_line(line) for line in lines if '?' in line]
+    if not questions:
+        return False
 
     interrogative_with_verb = 0
     interrogative_with_aux = 0
@@ -110,26 +199,32 @@ def in_third_stage(transcript, threshold=0.2):
                 interrogative_with_aux += 1
 
     if interrogative_with_aux / len(questions) > threshold:
-        return interrogative_with_aux / len(questions), True
+        return True
     else:
-        return interrogative_with_aux / len(questions), False
+        return False
 
 
 def in_fourth_stage(transcript):
-    # TODO: based on embedded sentences
+    """"""
 
     lines = get_grammar_lines(transcript, imitations=False)
 
-    embedded_sentence = 0
+    embedded_sentences = 0
 
     for line in lines:
-        roles = Counter([role.split('|')[-1] for role in line.split()])
-        if 'COMP' in roles and roles['SUBJ'] == 2:
-            embedded_sentence += 1
-        elif
+        struct = DependencyStructure(line)
+        root = struct.root()
+        if root == None:
+            continue
+        elif 'COMP' in root.dependency_roles():
+            comp = root.dependency_roles()['COMP']
+            if ('SUBJ' in comp.dependency_roles() or
+                'LINK' in comp.dependency_roles()):
+                embedded_sentences += 1
+        elif 'CMOD' in struct.roles():
+            embedded_sentences += 1
 
-
-    if embedded_sentence > 5:
+    if embedded_sentences / len(lines) > 0.02:
         return True
     else:
         return False
@@ -137,7 +232,27 @@ def in_fourth_stage(transcript):
 def in_fifth_stage(transcript):
     # TODO: based on coordinated sentences
 
-    pass
+    lines = get_grammar_lines(transcript, imitations=False)
+
+    coord_sentences = 0
+
+    for line in lines:
+        struct = DependencyStructure(line)
+        root = struct.root()
+        if root == None:
+            continue
+        elif (root.role == 'ROOT' and
+              'CONJ' in root.dependency_roles()):
+            conj = root.dependency_roles()['CONJ']
+            if 'COORD' in conj.dependency_roles():
+                coord_sentences += 1
+
+    if coord_sentences / len(lines) > 0.005:
+        return True
+    else:
+        return False
+
+
 
 
 def get_morphosyntax_lines(transcript, speaker='CHI', clean=True,
@@ -147,6 +262,7 @@ def get_morphosyntax_lines(transcript, speaker='CHI', clean=True,
 
     blocks = transcript.lines_as_tuples(speakers=speaker, annotations=True,
                                         as_blocks=True)
+    # filter out imitations
     lines = []
     for block in blocks:
         if imitations or not ('spa', '$IMIT') in block:
@@ -160,7 +276,7 @@ def get_morphosyntax_lines(transcript, speaker='CHI', clean=True,
     return lines
 
 
-def get_grammar_lines(transcript, speaker='CHI', imitations=True):
+def get_grammar_lines(transcript, speaker='CHI', clean=True, imitations=True):
     """Return a list of only grammar tagging for stated speaker in the
     transcript."""
 
@@ -170,7 +286,11 @@ def get_grammar_lines(transcript, speaker='CHI', imitations=True):
     for block in blocks:
         if imitations or not ('spa', '$IMIT') in block:
             lines += block
-    lines = [clean_line(line[1]) for line in lines if line[0] == 'gra']
+
+    if clean:
+        lines = [clean_line(line[1]) for line in lines if line[0] == 'gra']
+    else:
+        lines = [line[1] for line in lines if line[0] == 'gra']
 
     return lines
 
@@ -216,6 +336,5 @@ def clean_line(line):
         line = line.replace(item, '')
 
     return line
-
 
 main()
