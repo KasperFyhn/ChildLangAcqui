@@ -2,6 +2,7 @@ import childes_transcripts as ts
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from math import log
 
 def main():
     data = input('Please, input the data folder')
@@ -10,8 +11,9 @@ def main():
     ages = [ts.age_in_months(tran.speaker_details()['CHI']['age'])
             for tran in transcripts]
     mlus = [tran.mlu() for tran in transcripts]
-    #stages = [determine_stage(tran) for tran in transcripts]
+    stages = [determine_stage_gradually(tran) for tran in transcripts]
 
+    '''
     prev_stage = 1
     stages = []
     for tran in transcripts:
@@ -24,7 +26,7 @@ def main():
             stages.append(prev_stage)
         else:
             stages.append(prev_stage)
-
+    '''
 
 
     df = pd.DataFrame({'age': ages, 'MLU': mlus, 'stage': stages})
@@ -85,17 +87,35 @@ class _Constituent:
 def determine_stage(transcript):
     """Returns the number of the stage that the transcript is assessed to."""
 
-    if in_fifth_stage(transcript) and in_fourth_stage(transcript):
+    if in_fifth_stage(transcript) == True and in_fourth_stage(transcript) == True:
         return 5
-    elif in_fourth_stage(transcript) and in_third_stage(transcript):
+    elif in_fourth_stage(transcript) == True and in_third_stage(transcript) == True:
         return 4
-    elif in_third_stage(transcript) and in_second_stage(transcript):
+    elif in_third_stage(transcript) == True and in_second_stage(transcript) == True:
         return 3
-    elif in_second_stage(transcript):
+    elif in_second_stage(transcript) == True:
         return 2
-    elif in_first_stage(transcript):
+    elif in_first_stage(transcript) == True:
         return 1
-    elif in_zeroth_stage(transcript):
+    elif in_zeroth_stage(transcript) == True:
+        return 0
+    else:
+        return -1
+
+def determine_stage_gradually(transcript):
+    """Returns the number of the stage that the transcript is assessed to."""
+
+    if in_fifth_stage(transcript) == True and in_fourth_stage(transcript) == True:
+        return 5
+    elif in_fourth_stage(transcript) == True and in_third_stage(transcript) == True:
+        return 4 + in_fifth_stage(transcript)
+    elif in_third_stage(transcript) == True and in_second_stage(transcript) == True:
+        return 3 + in_fourth_stage(transcript)
+    elif in_second_stage(transcript) == True:
+        return 2 + in_third_stage(transcript)
+    elif in_first_stage(transcript) == True:
+        return 1 + in_second_stage(transcript)
+    elif in_zeroth_stage(transcript) == True:
         return 0
     else:
         return -1
@@ -168,7 +188,7 @@ def in_second_stage(transcript, inflection_threshold=0.05,
             and prop_inflected_words > inflection_threshold):
         return True
     else:
-        return False
+        return prop_function_words + prop_inflected_words
 
 
 def in_third_stage(transcript, threshold=0.2):
@@ -201,7 +221,7 @@ def in_third_stage(transcript, threshold=0.2):
     if interrogative_with_aux / len(questions) > threshold:
         return True
     else:
-        return False
+        return (interrogative_with_aux / len(questions)) / threshold
 
 
 def in_fourth_stage(transcript):
@@ -227,7 +247,7 @@ def in_fourth_stage(transcript):
     if embedded_sentences / len(lines) > 0.02:
         return True
     else:
-        return False
+        return (embedded_sentences / len(lines)) / 0.02
 
 def in_fifth_stage(transcript):
     # TODO: based on coordinated sentences
@@ -247,10 +267,10 @@ def in_fifth_stage(transcript):
             if 'COORD' in conj.dependency_roles():
                 coord_sentences += 1
 
-    if coord_sentences / len(lines) > 0.005:
+    if coord_sentences / len(lines) > 0.03:
         return True
     else:
-        return False
+        return (coord_sentences / len(lines)) / 0.03
 
 
 
