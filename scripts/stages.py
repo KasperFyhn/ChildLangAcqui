@@ -2,7 +2,7 @@ import childes_transcripts as ts
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from math import log
+
 
 def main():
     data = input('Please, input the data folder')
@@ -28,7 +28,6 @@ def main():
             stages.append(prev_stage)
     '''
 
-
     df = pd.DataFrame({'age': ages, 'MLU': mlus, 'stage': stages})
 
     print(df.head(len(df)))
@@ -41,7 +40,7 @@ class DependencyStructure:
     def __init__(self, line):
 
         words = line.split()
-        self.words = [_Constituent(word) for word in words]
+        self.words = [_Constituent(word, self) for word in words]
         for const in self.words:
             const.update_dependencies(self.words)
 
@@ -59,25 +58,31 @@ class DependencyStructure:
 
     def get_item(self, index):
 
-        return self.words[index -1]
+        return self.words[index - 1]
 
 
 class _Constituent:
 
-    def __init__(self, word):
+    def __init__(self, word, structure):
 
         parts = word.split('|')
-        self.index = parts[0]
-        self.head = parts[1]
+        self.index = int(parts[0])
+        self.head = int(parts[1])
         self.role = parts[2]
         self.dependencies = []
+        self.structure = structure
 
     def update_dependencies(self, constituents):
 
         for const in constituents:
             if const.head == self.index:
                 self.dependencies.append(const)
-                const.head = self
+
+        return
+
+    def get_head(self):
+
+        return self.structure.get_item(self.head)
 
     def dependency_roles(self):
 
@@ -162,8 +167,6 @@ def in_second_stage(transcript, inflection_threshold=0.05,
     """Determine if the child is in/has passed the second stage of acquisition
     by checking for inflections in the child's utterances."""
 
-    #TODO: check for clitics?
-
     inflected_words = 0
     function_words = 0
     words_total = 0
@@ -184,16 +187,16 @@ def in_second_stage(transcript, inflection_threshold=0.05,
     prop_function_words = function_words / words_total
     prop_inflected_words = inflected_words / (words_total - function_words)
 
-    if (prop_function_words > function_words_threshold
-            and prop_inflected_words > inflection_threshold):
+    if (prop_function_words > function_words_threshold and
+        prop_inflected_words > inflection_threshold):
         return True
     else:
         return prop_function_words + prop_inflected_words
 
 
 def in_third_stage(transcript, threshold=0.2):
-    #TODO: based on different sentence types and the appearance of mod's/aux's
-    """"""
+    """Determine if the child is in/has passed the third stage of acquisition
+    by checking for the use of auxiliaries in questions containing verbs."""
 
     lines = get_morphosyntax_lines(transcript, imitations=False, clean=False)
     questions = [clean_line(line) for line in lines if '?' in line]
@@ -218,13 +221,14 @@ def in_third_stage(transcript, threshold=0.2):
             if aux:
                 interrogative_with_aux += 1
 
+    # TODO: should it be tested only against inters with verbs?
     if interrogative_with_aux / len(questions) > threshold:
         return True
     else:
         return (interrogative_with_aux / len(questions)) / threshold
 
 
-def in_fourth_stage(transcript):
+def in_fourth_stage(transcript, threshold=0.02):
     """"""
 
     lines = get_grammar_lines(transcript, imitations=False)
@@ -234,7 +238,7 @@ def in_fourth_stage(transcript):
     for line in lines:
         struct = DependencyStructure(line)
         root = struct.root()
-        if root == None:
+        if root is None:
             continue
         elif 'COMP' in root.dependency_roles():
             comp = root.dependency_roles()['COMP']
@@ -244,35 +248,50 @@ def in_fourth_stage(transcript):
         elif 'CMOD' in struct.roles():
             embedded_sentences += 1
 
-    if embedded_sentences / len(lines) > 0.02:
+    if embedded_sentences / len(lines) > threshold:
         return True
     else:
-        return (embedded_sentences / len(lines)) / 0.02
+        return (embedded_sentences / len(lines)) / threshold
 
-def in_fifth_stage(transcript):
+
+def in_fifth_stage(transcript, threshold=0.02):
     # TODO: based on coordinated sentences
 
     lines = get_grammar_lines(transcript, imitations=False)
 
-    coord_sentences = 0
+    coord_elements = 0
+    allowed_roles = ['ROOT', 'SUBJ', 'OBJ']
+
 
     for line in lines:
+
+        struct = DependencyStructure(line)
+        if ('CONJ' in struct.roles() and
+            'COORD' in struct.roles()):
+            conj = struct.roles()['CONJ']
+            head = conj.get_head().role
+            deps = conj.dependency_roles()
+            if (head in allowed_roles and
+                'COORD' in deps):
+                coord_elements += 1
+
+
+        '''
         struct = DependencyStructure(line)
         root = struct.root()
-        if root == None:
+        if root is None:
             continue
         elif (root.role == 'ROOT' and
               'CONJ' in root.dependency_roles()):
             conj = root.dependency_roles()['CONJ']
             if 'COORD' in conj.dependency_roles():
-                coord_sentences += 1
+                coord_elements += 1'''
 
-    if coord_sentences / len(lines) > 0.03:
+
+    if coord_elements / len(lines) > threshold:
         return True
     else:
-        return (coord_sentences / len(lines)) / 0.03
-
-
+        return (coord_elements / len(lines)) / threshold
 
 
 def get_morphosyntax_lines(transcript, speaker='CHI', clean=True,
@@ -302,6 +321,7 @@ def get_grammar_lines(transcript, speaker='CHI', clean=True, imitations=True):
 
     blocks = transcript.lines_as_tuples(speakers=speaker, annotations=True,
                                         as_blocks=True)
+    # filter out imitations
     lines = []
     for block in blocks:
         if imitations or not ('spa', '$IMIT') in block:
@@ -313,6 +333,7 @@ def get_grammar_lines(transcript, speaker='CHI', clean=True, imitations=True):
         lines = [line[1] for line in lines if line[0] == 'gra']
 
     return lines
+
 
 def is_function_word(wordtag):
     """Return true if the word is a function word."""
