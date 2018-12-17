@@ -1,5 +1,6 @@
 import childes_transcripts as ts
 import pandas as pd
+import os
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -8,6 +9,7 @@ def main():
     data = input('Please, input the data folder')
     transcripts = ts.load_all_from_dir(data)
 
+    name = transcripts[0].name[:-6]
     ages = [ts.age_in_months(tran.speaker_details()['CHI']['age'])
             for tran in transcripts]
     mlus = [tran.mlu() for tran in transcripts]
@@ -30,9 +32,11 @@ def main():
 
     df = pd.DataFrame({'age': ages, 'MLU': mlus, 'stage': stages})
 
-    print(df.head(len(df)))
-    sns.lmplot('MLU', 'stage', df)
-    plt.show()
+    #sns.lmplot('MLU', 'stage', df)
+    #plt.show()
+
+    os.chdir(r'C:\Users\Kasper Fyhn Jacobsen\Dropbox\Child Language Acquisition')
+    df.to_csv(f'report_{name}.csv')
 
 
 class DependencyStructure:
@@ -82,7 +86,11 @@ class _Constituent:
 
     def get_head(self):
 
-        return self.structure.get_item(self.head)
+        if self.head == 0:
+            return None
+        else:
+            try: return self.structure.get_item(self.head)
+            except IndexError: return None
 
     def dependency_roles(self):
 
@@ -194,7 +202,7 @@ def in_second_stage(transcript, inflection_threshold=0.05,
         return prop_function_words + prop_inflected_words
 
 
-def in_third_stage(transcript, threshold=0.2):
+def in_third_stage(transcript, threshold=0.3):
     """Determine if the child is in/has passed the third stage of acquisition
     by checking for the use of auxiliaries in questions containing verbs."""
 
@@ -221,11 +229,12 @@ def in_third_stage(transcript, threshold=0.2):
             if aux:
                 interrogative_with_aux += 1
 
-    # TODO: should it be tested only against inters with verbs?
-    if interrogative_with_aux / len(questions) > threshold:
+    if interrogative_with_verb == 0:
+        return 0
+    elif interrogative_with_aux / interrogative_with_verb > threshold:
         return True
     else:
-        return (interrogative_with_aux / len(questions)) / threshold
+        return (interrogative_with_aux / interrogative_with_verb) / threshold
 
 
 def in_fourth_stage(transcript, threshold=0.02):
@@ -269,7 +278,10 @@ def in_fifth_stage(transcript, threshold=0.02):
         if ('CONJ' in struct.roles() and
             'COORD' in struct.roles()):
             conj = struct.roles()['CONJ']
-            head = conj.get_head().role
+            try:
+                head = conj.get_head().role
+            except:
+                continue
             deps = conj.dependency_roles()
             if (head in allowed_roles and
                 'COORD' in deps):
